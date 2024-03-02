@@ -145,6 +145,11 @@ function loadTheme() {
   }
 }
 
+function clearTable() {
+  var tableBody = document.getElementById("taskTable").getElementsByTagName('tbody')[0];
+  tableBody.innerHTML = "";
+}
+
 function applyFilter() {
   var tasks = JSON.parse(localStorage.getItem("tasks")) || [];
   var filteredTasks = tasks.filter(function(task) {
@@ -160,13 +165,13 @@ function applyFilter() {
     }
 
     var filterDate = document.getElementById("filterDate").value;
-    if (filterDate && task.dueDate !== filterDate) {
+    if (filterDate && task.dueDate === filterDate) {
       return false;
     }
 
     var startDate = document.getElementById("filterStartDate").value;
     var endDate = document.getElementById("filterEndDate").value;
-    if (startDate && endDate && (task.dueDate < startDate || task.dueDate > endDate)) {
+    if (startDate && endDate && (task.dueDate >= startDate || task.dueDate <= endDate)) {
       return false;
     }
 
@@ -193,6 +198,8 @@ function applyFilter() {
 }
 
 function resetFilter() {
+  clearTable();
+
   document.getElementById("filterCompleted").checked = false;
   document.getElementById("filterIncomplete").checked = false;
   document.getElementById("filterAll").checked = true;

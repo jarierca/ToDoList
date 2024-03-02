@@ -11,6 +11,10 @@ header, footer {
   text-align: left;
 }
 
+main {
+  margin-bottom: 100px;
+}
+
 footer {
   text-align: center;
   position: fixed;
@@ -184,7 +188,7 @@ a {
 }
 
 .filterOption button:hover {
-  background-color: #0056b3;
+  background-color: #45a049;
 }
 
 .a-btn{
