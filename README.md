@@ -11,6 +11,10 @@ The To-Do List project is a web application designed to help users manage their 
 - **Task Filtering**: Allows filtering tasks by completion status, due date, title, and description.
 - **Data Persistence**: Stores tasks locally in the browser to ensure availability even after closing the browser window.
 
+![ligth mode](img/ligth-mode.png)
+![dark mode](img/dark-mode.png)
+![Filter](img/filter.png)
+
 ## Technologies Used
 
 The To-Do List project has been developed using the following technologies:
