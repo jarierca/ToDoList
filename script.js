@@ -1,0 +1,247 @@
+document.addEventListener("DOMContentLoaded", function() {
+  loadTasks();
+  loadTheme();
+  loadOpenFilter();
+});
+
+function addTask() {
+  var titleInput = document.getElementById("titleInput");
+  var descriptionInput = document.getElementById("descriptionInput");
+  var dueDateInput = document.getElementById("dueDateInput");
+  var taskTable = document.getElementById("taskTable").getElementsByTagName('tbody')[0];
+
+  if (titleInput.value !== "") {
+    var task = {
+      title: titleInput.value,
+      description: descriptionInput.value,
+      dueDate: dueDateInput.value,
+      completed: false
+    };
+
+    saveTask(task);
+
+    var row = createTaskRow(task);
+    taskTable.appendChild(row);
+
+    titleInput.value = "";
+    descriptionInput.value = "";
+    dueDateInput.value = "";
+  } else {
+    alert("Please enter a title for the task!");
+  }
+}
+
+function createTaskRow(task) {
+  var row = document.createElement("tr");
+  var completed = task.completed ? "checked" : "";
+
+  var titleCell = document.createElement("td");
+  titleCell.textContent = task.title;
+  row.appendChild(titleCell);
+
+  var descriptionCell = document.createElement("td");
+  descriptionCell.innerHTML = makeDescriptionClickable(task.description);
+  row.appendChild(descriptionCell);
+
+  var dueDateCell = document.createElement("td");
+  dueDateCell.textContent = task.dueDate;
+  row.appendChild(dueDateCell);
+
+  var actionsCell = document.createElement("td");
+  var checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.classList.add("a-btn");
+  checkbox.title = "Toggle Completed";
+  checkbox.checked = task.completed;
+  checkbox.onchange = function() {
+    toggleCompleted(this);
+  };
+  actionsCell.appendChild(checkbox);
+  
+  var deleteButton = document.createElement("a");
+  deleteButton.textContent = "🗑️";
+  deleteButton.classList.add("a-btn");
+  deleteButton.title = "Clear task";
+  deleteButton.onclick = function() {
+    deleteTask(row);
+  };
+  actionsCell.appendChild(deleteButton);
+
+  row.appendChild(actionsCell);
+
+  if (task.completed) {
+    row.classList.add("completed");
+  }
+
+  return row;
+}
+
+function makeDescriptionClickable(description) {
+  return description.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
+}
+
+function deleteTask(row) {
+  var confirmation = window.confirm("Are you sure you want to eliminate this task?");
+  if (confirmation) {
+    row.remove();
+    var index = row.rowIndex;
+    var tasks = JSON.parse(localStorage.getItem("tasks"));
+    tasks.splice(index - 1, 1);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }
+}
+
+function toggleCompleted(checkbox) {
+  var row = checkbox.parentNode.parentNode;
+  if (checkbox.checked) {
+    row.classList.add("completed");
+  } else {
+    row.classList.remove("completed");
+  }
+
+  updateTaskStatus(row);
+}
+
+
+function saveTask(task) {
+  var tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  tasks.push(task);
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function loadTasks() {
+  var tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  var taskTable = document.getElementById("taskTable").getElementsByTagName('tbody')[0];
+
+  tasks.forEach(function(task) {
+    var row = createTaskRow(task);
+    taskTable.appendChild(row);
+  });
+}
+
+function updateTaskStatus(row) {
+  var tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  var index = Array.from(row.parentNode.children).indexOf(row);
+  tasks[index].completed = row.classList.contains("completed");
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function toggleTheme() {
+  var body = document.body;
+  body.classList.toggle("dark-mode");
+  saveTheme(body.classList.contains("dark-mode"));
+}
+
+function saveTheme(isDarkMode) {
+  localStorage.setItem("theme", isDarkMode ? "dark" : "light");
+}
+
+function loadTheme() {
+  var theme = localStorage.getItem("theme");
+  if (theme === "dark" || theme === null) {
+    document.body.classList.add("dark-mode");
+  } else {
+    document.body.classList.remove("dark-mode");
+  }
+}
+
+function applyFilter() {
+  var tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  var filteredTasks = tasks.filter(function(task) {
+
+    var completed = document.getElementById("filterCompleted").checked;
+    if (completed && !task.completed) {
+      return false;
+    }
+
+    var incomplete = document.getElementById("filterIncomplete").checked;
+    if (incomplete && task.completed) {
+      return false;
+    }
+
+    var filterDate = document.getElementById("filterDate").value;
+    if (filterDate && task.dueDate !== filterDate) {
+      return false;
+    }
+
+    var startDate = document.getElementById("filterStartDate").value;
+    var endDate = document.getElementById("filterEndDate").value;
+    if (startDate && endDate && (task.dueDate < startDate || task.dueDate > endDate)) {
+      return false;
+    }
+
+    var filterTitle = document.getElementById("filterTitle").value.toLowerCase();
+    if (filterTitle && !task.title.toLowerCase().includes(filterTitle)) {
+      return false;
+    }
+
+    var filterDescription = document.getElementById("filterDescription").value.toLowerCase();
+    if (filterDescription && !task.title.toLowerCase().includes(filterDescription)) {
+      return false;
+    }
+
+    return true;
+  });
+
+  var taskTableBody = document.getElementById("taskTable").getElementsByTagName('tbody')[0];
+  taskTableBody.innerHTML = "";
+
+  filteredTasks.forEach(function(task) {
+    var row = createTaskRow(task);
+    taskTableBody.appendChild(row);
+  });
+}
+
+function resetFilter() {
+  document.getElementById("filterCompleted").checked = false;
+  document.getElementById("filterIncomplete").checked = false;
+  document.getElementById("filterAll").checked = true;
+  document.getElementById("filterDate").value = "";
+  document.getElementById("filterStartDate").value = "";
+  document.getElementById("filterEndDate").value = "";
+  document.getElementById("filterTitle").value = "";
+  document.getElementById("filterDescription").value = "";
+
+  loadTasks();
+}
+
+function toggleFilter() {
+  var filterOptions = document.getElementById("filterOptions");
+  var toggleFilterButton = document.getElementById("toggleFilterButton");
+
+  if (filterOptions.style.display === "none" || filterOptions.style.display === "") {
+    filterOptions.style.display = "block";
+    toggleFilterButton.textContent = "▲";
+  } else {
+    filterOptions.style.display = "none";
+    toggleFilterButton.textContent = "▼";
+  }
+  saveFilterOpen(filterOptions.style.display === "block");
+}
+
+function saveFilterOpen(isFilterOpen) {
+  localStorage.setItem("filter", isFilterOpen ? "openned" : "closed");
+}
+
+function loadOpenFilter() {
+  var isOpen = localStorage.getItem("filter");
+    if (isOpen === "openned") {
+    filterOptions.style.display = "block";
+    toggleFilterButton.textContent = "▲";
+  } else {
+    filterOptions.style.display = "none";
+    toggleFilterButton.textContent = "▼";
+  }
+}
+
+function clearAllTasks() {
+  var confirmation = window.confirm("Are you sure you want to delete all tasks?");
+  if (confirmation) {
+    localStorage.removeItem("tasks");
+
+    var taskTableBody = document.getElementById("taskTable").getElementsByTagName('tbody')[0];
+    taskTableBody.innerHTML = "";
+  }
+}
+
+

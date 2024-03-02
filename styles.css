@@ -1,0 +1,180 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header, footer {
+  background-color: #222;
+  color: white;
+  padding: 20px;
+  text-align: left;
+}
+
+footer {
+  text-align: center;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav h1 {
+  margin: 0;
+}
+
+.theme-toggle {
+  font-size: 24px;
+  text-decoration: none;
+  color: white;
+}
+
+.container {
+  max-width: 60%;
+  min-width: 30%;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.container .form,
+.container table {
+  width: 100%;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.form input[type="text"],
+.form input[type="date"] {
+  width: calc(30% - 5px);
+  padding: 8px;
+  margin-right: 10px;
+}
+
+#descriptionInput {
+  width: calc(60% - 5px);
+}
+
+.form button {
+  padding: 8px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  width: calc(17% - 5px);
+}
+
+.form button:hover {
+  background-color: #45a049;
+}
+
+table {
+  text-align:left;
+}
+
+#taskTable {
+  margin-top: 25px;
+  border-collapse: collapse;
+}
+
+#taskTable thead {
+  border-bottom: 2px solid #444;
+}
+
+#taskTable tbody tr {
+  border-bottom: 2px solid #ddd;
+}
+
+#taskTable tbody td {
+  padding: 15px 5px;
+}
+
+#taskTable tbody input[type="checkbox"] {
+  transform: scale(1.5);
+  margin: 0 15%;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: grey;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="checkbox"],
+input[type="radio"] {
+  background-color: #fff;
+  color: #000;
+}
+
+.dark-mode input[type="text"],
+.dark-mode input[type="date"],
+.dark-mode input[type="checkbox"],
+.dark-mode input[type="radio"] {
+  background-color: #333;
+  color: #fff;
+}
+
+.dark-mode {
+  background-color: #333;
+  color: #fff;
+}
+
+.dark-mode a {
+  color: #61dafb;
+}
+
+a {
+  color: #007bff;
+}
+
+#filterOptions {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0px 30px 0px;
+}
+
+.filterOption {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.filterOption label {
+  margin-right: 10px;
+}
+
+.filterOption input[type="text"],
+.filterOption input[type="date"] {
+  flex: 1;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.filterOption button {
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 25px 5px 0px 5px;
+}
+
+.filterOption button:hover {
+  background-color: #0056b3;
+}
+
+.a-btn{
+  text-decoration: none;
+  cursor: pointer;
+}
