@@ -13,6 +13,10 @@ header, footer {
 
 footer {
   text-align: center;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
 }
 
 nav {
@@ -55,6 +59,11 @@ nav h1 {
   width: calc(30% - 5px);
   padding: 8px;
   margin-right: 10px;
+}
+
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+  accent-color: #4CAF50;
 }
 
 #descriptionInput {
@@ -129,6 +138,10 @@ input[type="radio"] {
 
 .dark-mode a {
   color: #61dafb;
+}
+
+#toggleFilterButton{
+  color:#4CAF50;
 }
 
 a {
