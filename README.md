@@ -2,6 +2,8 @@
 
 The To-Do List project is a web application designed to help users manage their daily tasks effectively. The application offers an intuitive and straightforward interface that allows users to create, edit, mark as completed, and delete tasks quickly and efficiently.
 
+![ligth mode](img/ligth-mode.png)
+
 ## Key Features
 
 - **Task Management**: Allows users to add new tasks with a title, description, and optional due date.
@@ -11,8 +13,8 @@ The To-Do List project is a web application designed to help users manage their 
 - **Task Filtering**: Allows filtering tasks by completion status, due date, title, and description.
 - **Data Persistence**: Stores tasks locally in the browser to ensure availability even after closing the browser window.
 
-![ligth mode](img/ligth-mode.png){width=500px} ![dark mode](img/dark-mode.png){width=500px}
-![Filter](img/filter.png){width=500px }
+![dark mode](img/dark-mode.png)
+![Filter](img/filter.png)
 
 ## Technologies Used
 
