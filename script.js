@@ -1,4 +1,4 @@
-  var taskIdCounter = parseInt(localStorage.getItem("taskIdCounter")) || 1;
+var taskIdCounter = parseInt(localStorage.getItem("taskIdCounter")) || 1;
 
 document.addEventListener("DOMContentLoaded", function() {
   loadTasks();
@@ -259,6 +259,7 @@ function clearAllTasks() {
   if (confirmation) {
     localStorage.removeItem("tasks");
     localStorage.removeItem("taskIdCounter");
+    taskIdCounter = 1;
 
     var taskTableBody = document.getElementById("taskTable").getElementsByTagName('tbody')[0];
     taskTableBody.innerHTML = "";
