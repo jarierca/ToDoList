@@ -211,6 +211,12 @@ function toggleTheme() {
   var body = document.body;
   body.classList.toggle("dark-mode");
   saveTheme(body.classList.contains("dark-mode"));
+
+  if (body.classList.contains("dark-mode")) {
+    document.getElementsByClassName("theme-toggle")[0].text = "🌙";
+  } else {
+    document.getElementsByClassName("theme-toggle")[0].text = "☀️";
+  }
 }
 
 function saveTheme(isDarkMode) {
@@ -221,8 +227,10 @@ function loadTheme() {
   var theme = localStorage.getItem("theme");
   if (theme === "dark" || theme === null) {
     document.body.classList.add("dark-mode");
+    document.getElementsByClassName("theme-toggle")[0].text = "🌙";
   } else {
     document.body.classList.remove("dark-mode");
+    document.getElementsByClassName("theme-toggle")[0].text = "☀️";
   }
 }
 
