@@ -23,15 +23,16 @@
         <button onclick="addTask()" title="Add a new Task">Add Task</button>
         <a id="toggleFilterButton" class="a-btn" onclick="toggleFilter()" title="Open/Close Filter">▼</a>
       </div>
+
       <div id="filterOptions">
         <div class="filterOption">
           <label>Status:</label>
-          <input type="radio" id="filterCompleted" name="status" checked>
+          <input type="radio" id="filterAll" name="status" checked>
+          <label for="filterAll">All</label>
+          <input type="radio" id="filterCompleted" name="status">
           <label for="filterCompleted">Completed</label>
           <input type="radio" id="filterIncomplete" name="status">
           <label for="filterIncomplete">Uncompleted</label>
-          <input type="radio" id="filterAll" name="status">
-          <label for="filterAll">All</label>
         </div>
         <div class="filterOption">
           <label for="filterDate">Date:</label>
@@ -57,6 +58,7 @@
           <button onclick="resetFilter()" title="Clear filter" >Reset</button>
         </div>
       </div>
+
       <div id="editModal" class="modal">
         <div id="modalBackground"></div>
         <div id="modalContainer">
@@ -81,14 +83,14 @@
           </div>
         </div>
       </div>
+
       <table id="taskTable">
         <thead>
           <tr>
             <th>Title</th>
             <th>Description</th>
             <th>Due Date</th>
-            <th>Completed</th>
-            <th><a class="a-btn" href="#" onclick="clearAllTasks()" title="Clear all tasks">🗑️</a></th>
+            <th>Completed <a class="a-btn" href="#" onclick="clearAllTasks()" title="Clear all tasks">🗑️</a></th>
           </tr>
         </thead>
         <tbody id="taskList"></tbody>
