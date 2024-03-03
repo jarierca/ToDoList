@@ -1,7 +1,10 @@
+  var taskIdCounter = parseInt(localStorage.getItem("taskIdCounter")) || 1;
+
 document.addEventListener("DOMContentLoaded", function() {
   loadTasks();
   loadTheme();
   loadOpenFilter();
+
 });
 
 function addTask() {
@@ -12,6 +15,7 @@ function addTask() {
 
   if (titleInput.value !== "") {
     var task = {
+      id: taskIdCounter,
       title: titleInput.value,
       description: descriptionInput.value,
       dueDate: dueDateInput.value,
@@ -26,6 +30,9 @@ function addTask() {
     titleInput.value = "";
     descriptionInput.value = "";
     dueDateInput.value = "";
+
+    taskIdCounter++;
+    localStorage.setItem("taskIdCounter", taskIdCounter);
   } else {
     alert("Please enter a title for the task!");
   }
@@ -33,6 +40,8 @@ function addTask() {
 
 function createTaskRow(task) {
   var row = document.createElement("tr");
+  row.dataset.id = task.id;
+
   var completed = task.completed ? "checked" : "";
 
   var titleCell = document.createElement("td");
@@ -81,13 +90,17 @@ function makeDescriptionClickable(description) {
 }
 
 function deleteTask(row) {
-  var confirmation = window.confirm("Are you sure you want to eliminate this task?");
+  var confirmation = window.confirm("Are you sure you want to remove this task?");
   if (confirmation) {
-    row.remove();
-    var index = row.rowIndex;
-    var tasks = JSON.parse(localStorage.getItem("tasks"));
-    tasks.splice(index - 1, 1);
+    var taskId = parseInt(row.dataset.id);
+
+    var tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    tasks = tasks.filter(function(task) {
+      return task.id !== taskId;
+    });
     localStorage.setItem("tasks", JSON.stringify(tasks));
+    
+    row.remove();
   }
 }
 
