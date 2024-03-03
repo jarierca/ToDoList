@@ -66,6 +66,15 @@ function createTaskRow(task) {
     toggleCompleted(this);
   };
   actionsCell.appendChild(checkbox);
+
+  var editButton = document.createElement("a");
+  editButton.textContent = "📝";
+  editButton.classList.add("a-btn");
+  editButton.title = "Edit Task";
+  editButton.onclick = function() {
+    editTask(row);
+  };
+  actionsCell.appendChild(editButton);
   
   var deleteButton = document.createElement("a");
   deleteButton.textContent = "🗑️";
@@ -86,8 +95,67 @@ function createTaskRow(task) {
 }
 
 function makeDescriptionClickable(description) {
-  return description.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
+  return description ? description.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>') : "";
 }
+
+function editTask(row) {
+  var task = {
+    title: row.cells[0].textContent,
+    description: row.cells[1].textContent,
+    dueDate: row.cells[2].textContent,
+    completed: row.classList.contains("completed")
+  };
+
+  document.getElementById("editTaskTitle").value = task.title;
+  document.getElementById("editTaskDescription").value = task.description;
+  document.getElementById("editTaskDueDate").value = task.dueDate;
+  document.getElementById("saveEditButton").dataset.id = row.dataset.id;
+
+  document.getElementById("editModal").style.display = "flex";
+}
+
+function closeModal() {
+  document.getElementById("editModal").style.display = "none";
+  
+  document.getElementById("editTaskTitle").value = "";
+  document.getElementById("editTaskDescription").value = "";
+  document.getElementById("editTaskDueDate").value = "";
+  document.getElementById("saveEditButton").dataset.id = "";
+}
+
+function updateTask() {
+  var taskId = document.getElementById("saveEditButton").dataset.id;
+  var row = document.querySelector('tr[data-id="' + taskId + '"]');
+
+  var editTaskTitle = document.getElementById("editTaskTitle");
+  var editTaskDescription = document.getElementById("editTaskDescription");
+  var editTaskDueDate = document.getElementById("editTaskDueDate");
+
+  var updatedTask = {
+    id: row.dataset.id,
+    title: editTaskTitle.value,
+    description: editTaskDescription.value,
+    dueDate: editTaskDueDate.value
+  };
+
+  row.cells[0].textContent = updatedTask.title;
+  row.cells[1].innerHTML = makeDescriptionClickable(updatedTask.description);
+  row.cells[2].textContent = updatedTask.dueDate
+
+  if (updatedTask.completed) {
+    row.classList.add("completed");
+  } else {
+    row.classList.remove("completed");
+  }
+
+  var tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  var index = Array.from(row.parentNode.children).indexOf(row);
+  tasks[index] = updatedTask;
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+
+  closeModal();
+}
+
 
 function deleteTask(row) {
   var confirmation = window.confirm("Are you sure you want to remove this task?");

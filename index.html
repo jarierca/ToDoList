@@ -57,6 +57,30 @@
           <button onclick="resetFilter()" title="Clear filter" >Reset</button>
         </div>
       </div>
+      <div id="editModal" class="modal">
+        <div id="modalBackground"></div>
+        <div id="modalContainer">
+           <div id="modalHeader">
+             <h2>Edit Task</h2>
+           </div>
+           <div class="modal-content">
+             <label for="editTaskTitle">Title:</label>
+             <input type="text" id="editTaskTitle" placeholder="Title">
+           </div>
+          <div class="modal-content">
+            <label for="editTaskDescription">Description:</label>
+            <input type="text" id="editTaskDescription" placeholder="Description"/>
+          </div>
+          <div class="modal-content">
+            <label for="editTaskDueDate">Due Date:</label>
+            <input type="date" id="editTaskDueDate">
+          </div>
+          <div class="modal-buttons">
+            <button id="saveEditButton" onclick="updateTask()">Save</button>
+            <button id="cancelEditButton" onclick="closeModal()">Cancel</button>
+          </div>
+        </div>
+      </div>
       <table id="taskTable">
         <thead>
           <tr>
