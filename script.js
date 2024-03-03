@@ -258,6 +258,7 @@ function clearAllTasks() {
   var confirmation = window.confirm("Are you sure you want to delete all tasks?");
   if (confirmation) {
     localStorage.removeItem("tasks");
+    localStorage.removeItem("taskIdCounter");
 
     var taskTableBody = document.getElementById("taskTable").getElementsByTagName('tbody')[0];
     taskTableBody.innerHTML = "";
