@@ -39,6 +39,10 @@ nav h1 {
   color: white;
 }
 
+.config{
+  display:flex;
+}
+
 .container {
   max-width: 60%;
   min-width: 30%;
@@ -59,10 +63,17 @@ nav h1 {
 }
 
 .form input[type="text"],
-.form input[type="date"] {
+.form input[type="date"],
+.form textarea {
   width: calc(30% - 5px);
   padding: 8px;
   margin-right: 10px;
+  height: 16px;
+}
+
+.form input[type="text"],
+.form input[type="date"]{
+  margin-bottom: auto;
 }
 
 input[type="checkbox"]:checked,
@@ -82,6 +93,7 @@ input[type="radio"]:checked {
   cursor: pointer;
   border-radius: 10px;
   width: calc(17% - 5px);
+  margin-bottom: auto;
 }
 
 .form button:hover {
@@ -106,13 +118,24 @@ table {
 }
 
 #taskTable tbody td {
-  padding: 15px 5px;
+  padding: 15px 10px;
 }
 
 #taskTable tbody input[type="checkbox"] {
   transform: scale(1.5);
   margin: 0 10%;
 }
+
+.table-flex, .table-flex a {
+  display:flex;
+  padding:0px 0px 0px 5px;
+}
+
+.table-flex, .table-flex a {
+  display:flex;
+  padding:0px 0px 0px 5px;
+}
+
 
 .completed {
   text-decoration: line-through;
@@ -122,7 +145,8 @@ table {
 input[type="text"],
 input[type="date"],
 input[type="checkbox"],
-input[type="radio"] {
+input[type="radio"],
+textarea {
   background-color: #fff;
   color: #000;
 }
@@ -130,7 +154,8 @@ input[type="radio"] {
 .dark-mode input[type="text"],
 .dark-mode input[type="date"],
 .dark-mode input[type="checkbox"],
-.dark-mode input[type="radio"] {
+.dark-mode input[type="radio"],
+.dark-mode textarea {
   background-color: #333;
   color: #fff;
 }
@@ -141,7 +166,8 @@ input[type="radio"] {
 }
 
 .dark-mode a {
-  color: #61dafb;
+  color: #4CAF50;
+  /*color: #61dafb;*/
 }
 
 #toggleFilterButton{
@@ -149,7 +175,8 @@ input[type="radio"] {
 }
 
 a {
-  color: #007bff;
+  /*color: #007bff;*/
+  color: #45a049;
 }
 
 #filterOptions {
@@ -177,7 +204,7 @@ a {
   border-radius: 3px;
 }
 
-.filterOption button {
+.filterOption button{
   background-color: #4CAF50;
   color: #fff;
   border: none;
@@ -187,7 +214,7 @@ a {
   margin: 25px 5px 0px 5px;
 }
 
-.filterOption button:hover {
+.filterOption button:hover{
   background-color: #45a049;
 }
 
@@ -217,13 +244,18 @@ a {
 }
 
 #modalContainer {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
   padding: 0px 5% 15px 5%;
   border-radius: 10px;
 }
 
 .modal-content {
-  padding: 10px 0px;
+  display:grid;
+  padding: 10px;
+}
+
+.modal-content label{
+  padding-bottom: 10px;
 }
 
 .modal-buttons {
@@ -233,5 +265,39 @@ a {
 #editModal button{
   margin-top: 25px;
   width: auto;
+}
+
+.gear-icon {
+  font-size: 24px;
+  cursor: pointer;
+  margin-right: 10px;
+  padding: 0px 10px;
+}
+
+#settingsMenu a {
+  color: #4CAF50;
+}
+
+#settingsMenu a:hover{
+  color: #45a049;
+}
+
+
+#settingsMenu {
+  display: none;
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  background-color: #222;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+}
+
+#settingsMenu.show {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  border: 2px solid #444;
+  border-radius: 10px;
 }
 

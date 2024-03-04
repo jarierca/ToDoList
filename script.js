@@ -1,4 +1,4 @@
-var taskIdCounter = parseInt(localStorage.getItem("taskIdCounter")) || 1;
+var taskIdCounter = parseInt(localStorage.getItem("taskIdCounter")) || 0;
 
 document.addEventListener("DOMContentLoaded", function() {
   loadTasks();
@@ -234,6 +234,11 @@ function loadTheme() {
   }
 }
 
+function toggleSettings() {
+  var settingsMenu = document.getElementById("settingsMenu");
+  settingsMenu.classList.toggle("show");
+}
+
 function clearTable() {
   var tableBody = document.getElementById("taskTable").getElementsByTagName('tbody')[0];
   tableBody.innerHTML = "";
@@ -254,14 +259,24 @@ function applyFilter() {
     }
 
     var filterDate = document.getElementById("filterDate").value;
-    if (filterDate && task.dueDate === filterDate) {
+    if (filterDate && task.dueDate !== filterDate) {
       return false;
     }
 
     var startDate = document.getElementById("filterStartDate").value;
     var endDate = document.getElementById("filterEndDate").value;
-    if (startDate && endDate && (task.dueDate >= startDate || task.dueDate <= endDate)) {
-      return false;
+    if (startDate && endDate) {
+      if (task.dueDate < startDate || task.dueDate > endDate) {
+          return false;
+      }
+    } else if (startDate) {
+      if (task.dueDate < startDate) {
+          return false;
+      }
+    } else if (endDate) {
+      if (task.dueDate > endDate) {
+          return false;
+      }
     }
 
     var filterTitle = document.getElementById("filterTitle").value.toLowerCase();
@@ -340,6 +355,46 @@ function clearAllTasks() {
     var taskTableBody = document.getElementById("taskTable").getElementsByTagName('tbody')[0];
     taskTableBody.innerHTML = "";
   }
+}
+
+function exportTasks() {
+  var tasks = localStorage.getItem("tasks");
+  
+  if (tasks) {
+    var blob = new Blob([tasks], { type: "application/json" });
+    
+    var link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "tasks.json";
+    
+    link.click();
+  } else {
+    alert("No tasks to export.");
+  }
+}
+
+function importTasks() {
+  var input = document.createElement("input");
+  input.type = "file";
+  
+  input.onchange = function(event) {
+    var file = event.target.files[0];
+    var reader = new FileReader();
+    
+    reader.onload = function(event) {
+      var content = event.target.result;
+      
+      try {
+        var tasks = JSON.parse(content);
+        localStorage.setItem("tasks", JSON.stringify(tasks))
+        location.reload();
+      } catch (error) {
+        alert("Error importing tasks: Invalid JSON format.");
+      }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
 }
 
 
