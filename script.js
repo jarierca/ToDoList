@@ -422,7 +422,11 @@ function importTasks() {
       
       try {
         var tasks = JSON.parse(content);
+        var highestId = getHighestId(importedTasks);
+
+        localStorage.setItem("taskIdCounter", JSON.stringify(++highestId))
         localStorage.setItem("tasks", JSON.stringify(tasks))
+
         location.reload();
       } catch (error) {
         alert("Error importing tasks: Invalid JSON format.");
@@ -432,6 +436,16 @@ function importTasks() {
   };
   input.click();
   toggleSettings();
+}
+
+function getHighestId(tasks) {
+    var highestId = 0;
+    tasks.forEach(function(task) {
+        if (task.id > highestId) {
+            highestId = task.id;
+        }
+    });
+    return highestId;
 }
 
 function sortTasksByDate() {
