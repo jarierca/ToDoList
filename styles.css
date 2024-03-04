@@ -309,3 +309,6 @@ a {
   border-radius: 10px;
 }
 
+#dueDateHeader {
+  cursor:pointer;
+}

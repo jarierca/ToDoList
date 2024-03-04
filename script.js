@@ -432,4 +432,38 @@ function importTasks() {
   input.click();
 }
 
+function sortTasksByDate() {
+  var header = document.getElementById("dueDateHeader");
+  var currentOrder = header.dataset.order;
 
+  if (!currentOrder) {
+    header.dataset.order = "asc";
+    header.textContent = "Due Date ▲";
+  } else if (currentOrder === "asc") {
+    header.dataset.order = "desc";
+    header.textContent = "Due Date ▼";
+  } else if (currentOrder === "desc") {
+    header.removeAttribute("data-order");
+    header.textContent = "Due Date";
+    clearTable();
+    loadTasks();
+    return;
+  }
+
+  var tasks = Array.from(document.getElementById("taskList").children);
+
+  if (currentOrder !== "") {
+    tasks.sort(function(a, b) {
+      var dateA = new Date(a.cells[2].textContent);
+      var dateB = new Date(b.cells[2].textContent);
+      return currentOrder === "asc" ? dateA - dateB : dateB - dateA;
+    });
+
+    var taskList = document.getElementById("taskList");
+    taskList.innerHTML = "";
+
+    tasks.forEach(function(task) {
+      taskList.appendChild(task);
+    });
+  }
+}
