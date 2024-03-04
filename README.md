@@ -10,6 +10,7 @@ The To-Do List project is a web application designed to help users manage their 
 - **Clear Visualization**: Presents the list of tasks in an organized and readable format to facilitate identification of pending tasks.
 - **Mark as Completed**: Users can mark tasks as completed with a simple click.
 - **Delete Tasks**: Provides the option to delete tasks that are no longer needed.
+- **Task Editing**: Enables users to edit existing tasks to update their title, description, or due date.
 - **Task Filtering**: Allows filtering tasks by completion status, due date, title, and description.
 - **Sorting by Date**: Enables sorting of tasks by date by clicking on the date column header.
 - **Data Import/Export**: Users can import and export task data to/from the application.
