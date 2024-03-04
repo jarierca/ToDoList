@@ -61,9 +61,14 @@
           <label for="filterDescription">Description:</label>
           <input type="text" id="filterDescription">
         </div>
-        <div class="filterOption">
-          <button onclick="applyFilter()" title="Search with current filter" >Search</button>
-          <button onclick="resetFilter()" title="Clear filter" >Reset</button>
+        <div class="filterOption filterOptionButtons">
+          <div>
+            <button onclick="applyFilter()" title="Search with current filter" >Search</button>
+            <button onclick="resetFilter()" title="Clear filter" >Reset</button> </div>
+          <div>
+            <a class="a-btn" onclick="saveFilterValues()" title="Save filter values">💾</a>
+            <a class="a-btn" onclick="clearFilterValues()" title="Clear filter values">🗑</a>
+          </div>
         </div>
       </div>
 

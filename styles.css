@@ -214,6 +214,14 @@ a {
   margin: 25px 5px 0px 5px;
 }
 
+.filterOptionButtons {
+    display: flex;
+    justify-content: space-between; /* Para distribuir los elementos uniformemente */
+    align-items: center; /* Para centrar verticalmente los elementos */
+    margin-top: 15px; /* Ajusta según sea necesario */
+}
+
+
 .filterOption button:hover{
   background-color: #45a049;
 }

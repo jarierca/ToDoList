@@ -3,7 +3,7 @@ var taskIdCounter = parseInt(localStorage.getItem("taskIdCounter")) || 0;
 document.addEventListener("DOMContentLoaded", function() {
   loadTasks();
   loadTheme();
-  loadOpenFilter();
+  loadFilter();
 
 });
 
@@ -343,6 +343,41 @@ function loadOpenFilter() {
     filterOptions.style.display = "none";
     toggleFilterButton.textContent = "▼";
   }
+}
+
+function saveFilterValues() {
+  var filterValues = {
+      completed: document.getElementById("filterCompleted").checked,
+      incomplete: document.getElementById("filterIncomplete").checked,
+      date: document.getElementById("filterDate").value,
+      startDate: document.getElementById("filterStartDate").value,
+      endDate: document.getElementById("filterEndDate").value,
+      title: document.getElementById("filterTitle").value,
+      description: document.getElementById("filterDescription").value
+  };
+  localStorage.setItem("filterValues", JSON.stringify(filterValues));
+}
+
+function clearFilterValues() {
+  localStorage.removeItem("filterValues");
+
+  resetFilter();
+}
+
+
+function loadFilter() {
+  loadOpenFilter();
+
+  var filterValues = JSON.parse(localStorage.getItem("filterValues")) || {};
+  document.getElementById("filterCompleted").checked = filterValues.completed || false;
+  document.getElementById("filterIncomplete").checked = filterValues.incomplete || false;
+  document.getElementById("filterDate").value = filterValues.date || "";
+  document.getElementById("filterStartDate").value = filterValues.startDate || "";
+  document.getElementById("filterEndDate").value = filterValues.endDate || "";
+  document.getElementById("filterTitle").value = filterValues.title || "";
+  document.getElementById("filterDescription").value = filterValues.description || "";
+
+  applyFilter()
 }
 
 function clearAllTasks() {
