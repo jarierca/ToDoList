@@ -2,6 +2,8 @@
 
 The To-Do List project is a web application designed to help users manage their daily tasks effectively. The application offers an intuitive and straightforward interface that allows users to create, edit, mark as completed, and delete tasks quickly and efficiently.
 
+You can try out the live demo [here](https://jarierca.github.io/ToDoList/).
+
 ![ligth mode](img/ligth-mode.png)
 
 ## Key Features
