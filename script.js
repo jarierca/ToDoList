@@ -422,7 +422,7 @@ function importTasks() {
       
       try {
         var tasks = JSON.parse(content);
-        var highestId = getHighestId(importedTasks);
+        var highestId = getHighestId(tasks);
 
         localStorage.setItem("taskIdCounter", JSON.stringify(++highestId))
         localStorage.setItem("tasks", JSON.stringify(tasks))
