@@ -15,7 +15,7 @@ function addTask() {
 
   if (titleInput.value !== "") {
     var task = {
-      id: taskIdCounter,
+      id: taskIdCounter++,
       title: titleInput.value,
       description: descriptionInput.value,
       dueDate: dueDateInput.value,
@@ -31,7 +31,6 @@ function addTask() {
     descriptionInput.value = "";
     dueDateInput.value = "";
 
-    taskIdCounter++;
     localStorage.setItem("taskIdCounter", taskIdCounter);
   } else {
     alert("Please enter a title for the task!");
@@ -385,7 +384,7 @@ function clearAllTasks() {
   if (confirmation) {
     localStorage.removeItem("tasks");
     localStorage.removeItem("taskIdCounter");
-    taskIdCounter = 1;
+    taskIdCounter = 0;
 
     var taskTableBody = document.getElementById("taskTable").getElementsByTagName('tbody')[0];
     taskTableBody.innerHTML = "";
@@ -426,7 +425,7 @@ function importTasks() {
         var taskIdCounter = parseInt(localStorage.getItem("taskIdCounter")) || 0;
 
         importedTasks.forEach(function(task) {
-          task.id = ++taskIdCounter;
+          task.id = taskIdCounter++;
           tasks.push(task);
         });
 
@@ -442,16 +441,6 @@ function importTasks() {
   };
   input.click();
   toggleSettings();
-}
-
-function getHighestId(tasks) {
-    var highestId = 0;
-    tasks.forEach(function(task) {
-        if (task.id > highestId) {
-            highestId = task.id;
-        }
-    });
-    return highestId;
 }
 
 function sortTasksByDate() {
