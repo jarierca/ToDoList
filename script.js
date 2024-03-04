@@ -406,6 +406,7 @@ function exportTasks() {
   } else {
     alert("No tasks to export.");
   }
+  toggleSettings();
 }
 
 function importTasks() {
@@ -430,6 +431,7 @@ function importTasks() {
     reader.readAsText(file);
   };
   input.click();
+  toggleSettings();
 }
 
 function sortTasksByDate() {
