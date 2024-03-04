@@ -422,7 +422,7 @@ function importTasks() {
       
       try {
         var importedTasks = JSON.parse(content);
-        var tasks = [];
+        var tasks = JSON.parse(localStorage.getItem("tasks")) || [];
         var taskIdCounter = parseInt(localStorage.getItem("taskIdCounter")) || 0;
 
         importedTasks.forEach(function(task) {
