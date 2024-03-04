@@ -421,11 +421,17 @@ function importTasks() {
       var content = event.target.result;
       
       try {
-        var tasks = JSON.parse(content);
-        var highestId = getHighestId(tasks);
+        var importedTasks = JSON.parse(content);
+        var tasks = [];
+        var taskIdCounter = parseInt(localStorage.getItem("taskIdCounter")) || 0;
 
-        localStorage.setItem("taskIdCounter", JSON.stringify(++highestId))
-        localStorage.setItem("tasks", JSON.stringify(tasks))
+        importedTasks.forEach(function(task) {
+          task.id = ++taskIdCounter;
+          tasks.push(task);
+        });
+
+        localStorage.setItem("taskIdCounter", JSON.stringify(taskIdCounter));
+        localStorage.setItem("tasks", JSON.stringify(tasks));
 
         location.reload();
       } catch (error) {
