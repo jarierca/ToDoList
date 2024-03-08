@@ -225,6 +225,7 @@ function switchList(listName) {
   clearTable();
   loadTasks();
   document.getElementById("listNameLink").textContent = currentList;
+  document.getElementById("listNameLink").title = currentList;
 }
 
 function loadLists() {
@@ -234,6 +235,7 @@ function loadLists() {
   Object.keys(listsData).forEach(function(listName) {
     var span = document.createElement("span");
     span.value = listName;
+    span.classList.add("a-btn");
     span.textContent = listName;
     span.onclick = function() {
       switchList(listName);
@@ -282,6 +284,7 @@ function editListName() {
       delete listsData[oldListName];
       saveListsData();
       loadLists();
+      location.reload();
     }
   }
 }

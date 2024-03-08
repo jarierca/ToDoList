@@ -33,6 +33,12 @@ nav h1 {
   margin: 0;
 }
 
+.title{
+  color:white !important;
+  text-decoration: none !important;
+  cursor: pointer;
+}
+
 .theme-toggle {
   font-size: 24px;
   text-decoration: none;
@@ -350,6 +356,7 @@ a {
 
 #listNameContainer a {
   color: #4CAF50;
+  vertical-align: middle;
 }
 
 #listNameContainer a:hover{
@@ -373,6 +380,9 @@ a {
   border: 2px solid #444;
   border-radius: 10px;
   cursor: pointer;
+  max-height: 150px;
+  max-width: 500px;
+  overflow: auto;
 }
 
 #listOptions span:hover{
@@ -381,5 +391,10 @@ a {
 
 #listNameLink {
   font-size: 23px;
+  display: inline-block; 
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 500px;
 }
 
