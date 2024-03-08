@@ -11,6 +11,10 @@
   <header>
     <nav>
       <h1>To Do List</h1>
+      <div id="listNameContainer" onclick="toggleListOptions()" >
+          <a href="#" id="listNameLink">Current List ▼</a>
+          <div id="listOptions" class="" onmouseleave="hideListOptions()"> </div>
+      </div>
       <div class="config">
         <div class="gear-icon" onclick="toggleSettings()">⚙️</div>
         <div id="settingsMenu">
@@ -24,6 +28,11 @@
 
   <main>
     <div class="container">
+      <div class="form list">
+        <input type="text" id="newListInput" placeholder="New List Name">
+        <button onclick="createList(document.getElementById('newListInput').value)">Create List</button>
+        <a class="a-btn" href="#" onclick="clearAllTasks()" title="Clear all tasks">🗑️</a>
+      </div>
       <div class="form">
         <input type="text" id="titleInput" placeholder="Title">
         <textarea id="descriptionInput" placeholder="Description"></textarea>
@@ -95,14 +104,17 @@
           </div>
         </div>
       </div>
-
+      
+      <div class="list-title">
+          
+      </div>
       <table id="taskTable">
         <thead>
           <tr>
             <th>Title</th>
             <th>Description</th>
             <th id="dueDateHeader" onclick="sortTasksByDate()">Due Date</th>
-            <th class="table-flex">Completed <a class="a-btn" href="#" onclick="clearAllTasks()" title="Clear all tasks">🗑️</a></th>
+            <th class="table-flex">Completed <a class="a-btn" href="#" onclick="clearAllTasks()" title="Clear all tasks from the current list">🗑️</a></th>
           </tr>
         </thead>
         <tbody id="taskList"></tbody>
