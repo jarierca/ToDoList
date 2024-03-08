@@ -19,7 +19,7 @@
       </div>
       <div class="config">
         <div class="gear-icon" onclick="toggleSettings()">⚙️</div>
-        <div id="settingsMenu">
+        <div id="settingsMenu" onmouseleave="hideSettings()">
           <a class="a-btn" onclick="exportTasks()">Export Tasks</a>
           <a class="a-btn" onclick="importTasks()">Import Task</a>
           <a class="a-btn" onclick="clearAllTasks()" title="Clear all">Clear All</a>

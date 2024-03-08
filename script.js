@@ -335,6 +335,11 @@ function toggleSettings() {
   settingsMenu.classList.toggle("show");
 }
 
+function hideSettings() {
+    var settingsMenu = document.getElementById("settingsMenu");
+    settingsMenu.classList.remove("show");
+}
+
 function clearTable() {
   var tableBody = document.getElementById("taskTable").getElementsByTagName('tbody')[0];
   tableBody.innerHTML = "";
