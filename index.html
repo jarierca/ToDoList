@@ -11,15 +11,18 @@
   <header>
     <nav>
       <h1>To Do List</h1>
-      <div id="listNameContainer" onclick="toggleListOptions()" >
-          <a href="#" id="listNameLink">Current List ▼</a>
+      <div id="listNameContainer">
+          <a href="#" id="listNameLink" onclick="toggleListOptions()">Current List ▼</a>
           <div id="listOptions" class="" onmouseleave="hideListOptions()"> </div>
+          <a class="a-btn" id="editListNameButton" onclick="editListName()" title="Edit List Name">📝</a>
+           <a class="a-btn" href="#" onclick="clearCurrentListTasks()" title="Clear all tasks from the current list">🗑️</a>
       </div>
       <div class="config">
         <div class="gear-icon" onclick="toggleSettings()">⚙️</div>
         <div id="settingsMenu">
           <a class="a-btn" onclick="exportTasks()">Export Tasks</a>
           <a class="a-btn" onclick="importTasks()">Import Task</a>
+          <a class="a-btn" onclick="clearAllTasks()" title="Clear all">Clear All</a>
         </div>
         <a href="#" onclick="toggleTheme()" class="theme-toggle" title="Toggle theme">☀️</a>
       </div>
@@ -30,10 +33,9 @@
     <div class="container">
       <div class="form list">
         <input type="text" id="newListInput" placeholder="New List Name">
-        <button onclick="createList(document.getElementById('newListInput').value)">Create List</button>
-        <a class="a-btn" href="#" onclick="clearAllTasks()" title="Clear all tasks">🗑️</a>
+        <button onclick="createList()">Create List</button>
       </div>
-      <div class="form">
+      <div id="addTask" class="form">
         <input type="text" id="titleInput" placeholder="Title">
         <textarea id="descriptionInput" placeholder="Description"></textarea>
         <input type="date" id="dueDateInput">
@@ -114,7 +116,7 @@
             <th>Title</th>
             <th>Description</th>
             <th id="dueDateHeader" onclick="sortTasksByDate()">Due Date</th>
-            <th class="table-flex">Completed <a class="a-btn" href="#" onclick="clearAllTasks()" title="Clear all tasks from the current list">🗑️</a></th>
+            <th class="table-flex">Completed</th>
           </tr>
         </thead>
         <tbody id="taskList"></tbody>

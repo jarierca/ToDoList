@@ -80,7 +80,7 @@ function createTaskRow(task) {
 
   var editButton = document.createElement("a");
   editButton.textContent = "📝";
-  editButton.classList.add("a-btn");
+  editButton.classList.add("a-action");
   editButton.title = "Edit Task";
   editButton.onclick = function() {
     editTask(row);
@@ -89,7 +89,7 @@ function createTaskRow(task) {
   
   var deleteButton = document.createElement("a");
   deleteButton.textContent = "🗑️";
-  deleteButton.classList.add("a-btn");
+  deleteButton.classList.add("a-action");
   deleteButton.title = "Clear task";
   deleteButton.onclick = function() {
     deleteTask(row);
@@ -174,16 +174,18 @@ function deleteTask(row) {
   var confirmation = window.confirm("Are you sure you want to remove this task?");
   if (confirmation) {
     var taskId = parseInt(row.dataset.id);
-
-    var tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    tasks = tasks.filter(function(task) {
+    var currentListData = listsData[currentList];
+    
+    currentListData.tasks = currentListData.tasks.filter(function(task) {
       return task.id !== taskId;
     });
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+
+    saveListsData();
     
     row.remove();
   }
 }
+
 
 function toggleCompleted(checkbox) {
   var row = checkbox.parentNode.parentNode;
@@ -222,7 +224,7 @@ function switchList(listName) {
   localStorage.setItem("currentList", currentList);
   clearTable();
   loadTasks();
-  document.getElementById("listNameLink").textContent = currentList + "▼";
+  document.getElementById("listNameLink").textContent = currentList;
 }
 
 function loadLists() {
@@ -241,28 +243,47 @@ function loadLists() {
   });
 }
 
-function createList(listName) {
-  if (listName.trim() === "") {
+function createList() {
+  var newListName = document.getElementById('newListInput')
+  if (newListName.value.trim() === "") {
     alert("Please enter a name for the new list!");
     return;
   }
 
-  if (listsData[listName]) {
+  if (listsData[newListName.value]) {
     alert("List already exists!");
     return;
   }
 
-  listsData[listName] = { tasks: [], taskIdCounter: 0 };
+  listsData[newListName.value] = { tasks: [], taskIdCounter: 0 };
 
   saveListsData();
-  
-  var listSelector = document.getElementById("listSelector");
-  var option = document.createElement("option");
-  option.value = listName;
-  option.textContent = listName;
-  listSelector.appendChild(option);
 
-  switchList(listName);
+//  var listSelector = document.getElementById("listSelector");
+//  var option = document.createElement("option");
+//  option.value = listName;
+//  option.textContent = listName;
+//  listSelector.appendChild(option);
+ 
+  loadLists();
+  switchList(newListName.value);
+  newListInput.value = "";
+}
+
+function editListName() {
+  var newName = prompt("Enter the new name for the current list:", currentList);
+  if (newName && newName.trim() !== "") {
+    var oldListName = currentList;
+    currentList = newName.trim();
+    localStorage.setItem("currentList", currentList);
+    document.getElementById("listNameLink").textContent = currentList;
+    if (listsData.hasOwnProperty(oldListName)) {
+      listsData[newName] = listsData[oldListName];
+      delete listsData[oldListName];
+      saveListsData();
+      loadLists();
+    }
+  }
 }
 
 
@@ -464,13 +485,26 @@ function clearCurrentListTasks() {
   var confirmation = window.confirm("Are you sure you want to delete all tasks from the current list?");
   if (confirmation && listsData[currentList]) {
     listsData[currentList].tasks = [];
+    delete listsData[currentList];
+ 
     saveListsData();
+    var remainingLists = Object.keys(listsData);
+    if (remainingLists.length > 0) {
+      currentList = remainingLists[0];
+      localStorage.setItem("currentList", currentList);
+    } else {
+      localStorage.removeItem("currentList");
+    }
+    
+    loadLists();
+    switchList(currentList);    
+    clearTable();
     loadTasks();
   }
 }
 
 function clearAllTasks() {
-  var confirmation = window.confirm("Are you sure you want to delete all tasks?");
+  var confirmation = window.confirm("Are you sure you want to delete all?");
   if (confirmation) {
     listsData = {};
     taskIdCounter = 0;

@@ -241,6 +241,11 @@ a {
   cursor: pointer;
 }
 
+.a-action{
+  text-decoration: none;
+  cursor: pointer;
+}
+
 #editModal {
   display: none;
   position: fixed;
@@ -292,7 +297,7 @@ a {
 }
 
 #settingsMenu a {
-  color: #4CAF50;
+  color: white;
 }
 
 #settingsMenu a:hover{
@@ -345,12 +350,10 @@ a {
 
 #listNameContainer a {
   color: #4CAF50;
-  text-decoration: none;
 }
 
 #listNameContainer a:hover{
   color: #45a049;
-  text-decoration: none;
 }
 
 #listOptions {
@@ -374,5 +377,9 @@ a {
 
 #listOptions span:hover{
   color: #45a049;
+}
+
+#listNameLink {
+  font-size: 23px;
 }
 
