@@ -9,6 +9,7 @@ You can try out the live demo [here](https://jarierca.github.io/ToDoList/).
 ## Key Features
 
 - **Task Management**: Allows users to add new tasks with a title, description, and optional due date.
+- **List Management**: Users can create, edit, and delete lists of tasks.
 - **Clear Visualization**: Presents the list of tasks in an organized and readable format to facilitate identification of pending tasks.
 - **Mark as Completed**: Users can mark tasks as completed with a simple click.
 - **Delete Tasks**: Provides the option to delete tasks that are no longer needed.
@@ -17,7 +18,7 @@ You can try out the live demo [here](https://jarierca.github.io/ToDoList/).
 - **Sorting by Date**: Enables sorting of tasks by date by clicking on the date column header.
 - **Data Import/Export**: Users can import and export task data to/from the application.
 - **Filter Saving/Clearing**: Provides functionality to save and clear filters for easier task management.
-- **Data Persistence**: Stores tasks locally in the browser to ensure availability even after closing the browser window.
+- **Data Persistence**: Stores tasks and lists locally in the browser to ensure availability even after closing the browser window.
 
 ![Filter](img/dark-mode-filter.png)
 
@@ -28,7 +29,7 @@ The To-Do List project has been developed using the following technologies:
 - **HTML5**: For the structure and content of the web page.
 - **CSS3**: For the design and styling of the user interface.
 - **JavaScript (ES6+)**: For the application logic and page interactivity.
-- **localStorage**: For local storage of user tasks.
+- **localStorage**: For local storage of user tasks and lists.
 - **Git**: For version control of the source code.
 - **GitHub**: For hosting the project repository and facilitating collaboration with other developers.
 
@@ -36,7 +37,7 @@ The To-Do List project has been developed using the following technologies:
 
 1. Clone the project repository to your local machine.
 2. Open the `index.html` file in your web browser.
-3. Use the application to manage your daily tasks as needed.
+3. Use the application to manage your daily tasks and lists as needed.
 4. Enjoy efficient task management!
 
 ## Contribution
