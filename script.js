@@ -519,6 +519,7 @@ function clearAllTasks() {
 
     localStorage.removeItem("listsData");
     localStorage.removeItem("taskIdCounter");
+    localStorage.removeItem("currentList");
 
     var taskTableBody = document.getElementById("taskList");
     taskTableBody.innerHTML = "";
