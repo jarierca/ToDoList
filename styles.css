@@ -398,3 +398,33 @@ a {
   max-width: 500px;
 }
 
+.a-subtask{
+  background-color:white
+}
+
+.task-row {
+  background-color: #ffffff;
+}
+
+.subtask-row {
+  background-color: #f0f0f0;
+}
+
+.dark-mode .task-row {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+.dark-mode .subtask-row {
+  background-color: #222222;
+  color: #ffffff;
+}
+
+.subtask-row {
+  display: none;
+}
+
+.subtask-row.subtask-visible {
+  display: table-row;
+}
+
