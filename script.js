@@ -55,10 +55,32 @@ function createTaskRow(task) {
   row.dataset.list = currentList;
 
   var completed = task.completed ? "checked" : "";
+  
+  var subtasks = listsData[currentList].tasks[task.id].subtasks;
+  var showSubtasks = listsData[currentList].tasks[task.id].showSubtasks;
 
   var titleCell = document.createElement("td");
-  titleCell.textContent = task.title;
-  row.appendChild(titleCell);
+  var title = document.createElement("span");
+  title.textContent = task.title;
+
+  if(subtasks){
+    var toggleButton = document.createElement("a");
+    toggleButton.classList.add("a-btn");
+    toggleButton.classList.add("toggle-hide");
+    if(showSubtasks){
+      toggleButton.textContent = "▼";
+    }else {
+      toggleButton.textContent = "▲";
+    }
+    toggleButton.addEventListener("click", function() {
+      toggleSubtasksVisibility(row);
+    });
+    titleCell.appendChild(toggleButton);
+  }
+
+  titleCell.appendChild(title);
+
+  row.appendChild(titleCell);    
 
   var descriptionCell = document.createElement("td");
   descriptionCell.innerHTML = makeDescriptionClickable(task.description);
@@ -83,6 +105,7 @@ function createTaskRow(task) {
   editButton.textContent = "📝";
   editButton.classList.add("a-action");
   editButton.title = "Edit Task";
+  editButton.style.paddingRight = "5px";
   editButton.onclick = function() {
     editTask(row);
   };
@@ -92,41 +115,24 @@ function createTaskRow(task) {
   deleteButton.textContent = "🗑️";
   deleteButton.classList.add("a-action");
   deleteButton.title = "Clear task";
+  deleteButton.style.paddingRight = "5px";
   deleteButton.onclick = function() {
     deleteTask(row);
   };
   actionsCell.appendChild(deleteButton);
 
   var addSubtaskButton = document.createElement("a");
-  addSubtaskButton.textContent = "➕";
-  addSubtaskButton.classList.add("a-action");
+  addSubtaskButton.textContent = "+";
   addSubtaskButton.classList.add("a-subtask")
+  addSubtaskButton.classList.add("a-action");
   addSubtaskButton.title = "Add subtask";
+  addSubtaskButton.style.padding = "5px";
   addSubtaskButton.onclick = function() {
     addSubtask(row);
   };
   actionsCell.appendChild(addSubtaskButton);
 
   row.appendChild(actionsCell);
- 
-/* 
-  var subtaskTable = document.createElement("table");
-  subtaskTable.classList.add("subtask-list");
-  var subtaskTableBody = document.createElement("tbody");
-  subtaskTable.appendChild(subtaskTableBody);
-
-  if (task.subtasks && task.subtasks.length > 0) {
-    task.subtasks.forEach(function(subtask) {
-      var subtaskRow = document.createElement("tr");
-      var subtaskCell = document.createElement("td");
-      subtaskCell.textContent = subtask.title;
-      subtaskRow.appendChild(subtaskCell);
-      subtaskTableBody.appendChild(subtaskRow);
-    });
-  }
-
-  subtaskTable.appendChild(subtaskTableBody);
-  actionsCell.appendChild(subtaskTable); */
 
   if (task.completed) {
     row.classList.add("completed");
@@ -168,12 +174,24 @@ function updateTask() {
     var editTaskDescription = document.getElementById("editTaskDescription").value;
     var editTaskDueDate = document.getElementById("editTaskDueDate").value;
 
+    var subtasksContainer = document.querySelector('tr[data-id="' + taskId + '"] .subtask-list tbody');
+    var subtasks = [];
+    if (subtasksContainer) {
+      subtasksContainer.querySelectorAll('tr').forEach(function(subtaskRow) {
+        subtasks.push({
+          title: subtaskRow.cells[2].textContent,
+          completed: subtaskRow.cells[3].querySelector('input[type="checkbox"]').checked
+        });
+      });
+    }
+
     var updatedTask = {
       id: taskId,
       title: editTaskTitle,
       description: editTaskDescription,
       dueDate: editTaskDueDate,
-      completed: listsData[currentList].tasks[taskIndex].completed
+      completed: listsData[currentList].tasks[taskIndex].completed,
+      subtasks: subtasks
     };
 
     listsData[currentList].tasks[taskIndex] = updatedTask;
@@ -748,10 +766,17 @@ function loadSubtasks(task) {
   var row = document.querySelector('tr[data-id="' + taskIndex + '"]');
   var parentRow = row.parentNode;
   var subtasks = listsData[currentList].tasks[taskIndex].subtasks;
+
+  var showSubtasks = listsData[currentList].tasks[taskIndex].showSubtasks;
     
   if(subtasks){
-    var subtaskContainer = document.createElement("div");
+    var subtaskContainer = document.createElement("tr");
+    subtaskContainer.setAttribute("data-id", taskIndex);
     subtaskContainer.classList.add("subtask-container");
+
+    if(showSubtasks !== false){
+      subtaskContainer.style.display = "none";    
+    }
       
     var subtaskTable = document.createElement("table");
     subtaskTable.classList.add("subtask-list");
@@ -844,4 +869,35 @@ function toggleSubtasks(taskId, subtaskId, checkbox) {
     console.error("Parent task not found!");
   }
 }
+
+function toggleSubtasksVisibility(taskRow) {
+  var taskId = taskRow.dataset.id;
+  var subtaskContainer = taskRow.nextElementSibling;
+
+  var task = listsData[currentList].tasks.find(function(task) {
+    return task.id == taskId;
+  });
+
+  if (subtaskContainer && subtaskContainer.classList.contains("subtask-container") && (subtaskContainer.getAttribute('data-id') === taskId)) {
+    var aToggleHide = taskRow.querySelector('a.toggle-hide');
+    
+    if (subtaskContainer.style.display === "none") {
+      subtaskContainer.style.display = "block";
+      aToggleHide.textContent = "▲";
+
+    } else {
+      subtaskContainer.style.display = "none";
+      aToggleHide.textContent = "▼";
+    }
+
+    if (task) {
+      task.showSubtasks = !task.showSubtasks;
+
+      saveListsData();
+
+      loadTasks();
+    }
+  }
+}
+
 
