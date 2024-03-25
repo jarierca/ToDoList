@@ -194,8 +194,8 @@ function updateTask() {
     if (subtasksContainer) {
       subtasksContainer.querySelectorAll('tr').forEach(function(subtaskRow) {
         subtasks.push({
-          title: subtaskRow.cells[2].textContent,
-          completed: subtaskRow.cells[3].querySelector('input[type="checkbox"]').checked
+          title: subtaskRow.cells[2].querySelector('span').textContent ,
+          completed: subtaskRow.cells[2].querySelector('input[type="checkbox"]').checked
         });
       });
     }
@@ -206,7 +206,8 @@ function updateTask() {
       description: editTaskDescription,
       dueDate: editTaskDueDate,
       completed: listsData[currentList].tasks[taskIndex].completed,
-      subtasks: subtasks
+      subtasks: subtasks,
+      showSubtasks: listsData[currentList].tasks[taskIndex].showSubtasks
     };
 
     listsData[currentList].tasks[taskIndex] = updatedTask;
@@ -784,7 +785,7 @@ function loadSubtasks(task) {
     subtaskContainer.setAttribute("data-id", taskIndex);
     subtaskContainer.classList.add("subtask-container");
 
-    if(showSubtasks !== false){
+    if(!showSubtasks){
       subtaskContainer.style.display = "none";    
     }
 
@@ -906,10 +907,12 @@ function toggleSubtasksVisibility(taskRow) {
     return task.id == taskId;
   });
 
+  var showSubTasks = task.showSubtasks;
+
   if (subtaskContainer && subtaskContainer.classList.contains("subtask-container") && (subtaskContainer.getAttribute('data-id') === taskId)) {
     var aToggleHide = taskRow.querySelector('a.toggle-hide');
     
-    if (subtaskContainer.style.display === "none") {
+    if (showSubTasks) {
       subtaskContainer.style.display = "block";
       aToggleHide.textContent = "▲";
 
