@@ -72,10 +72,6 @@
           <label for="filterDescription">Description:</label>
           <input type="text" id="filterDescription">
         </div>
-        <div class="filterOption">
-          <label for="filterSubTaskTitle">SubTask Title:</label>
-          <input type="text" id="filterSubTaskTitle">
-        </div>
         <div class="filterOption filterOptionButtons">
           <div>
             <button onclick="applyFilter()" title="Search with current filter" >Search</button>
@@ -117,10 +113,11 @@
       <table id="taskTable">
         <thead>
           <tr>
-            <th>Title</th>
+            <th class="subtaks-toggle"></th>
+            <th class="th-head-title">Title</th>
             <th>Description</th>
             <th id="dueDateHeader" onclick="sortTasksByDate()">Due Date</th>
-            <th class="table-flex">Completed</th>
+            <th class="table-flex">Actions</th>
           </tr>
         </thead>
         <tbody id="taskList"></tbody>

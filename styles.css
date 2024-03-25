@@ -138,7 +138,7 @@ table {
 
 #taskTable tbody input[type="checkbox"] {
   transform: scale(1.5);
-  margin: 0 5%;
+  margin-right: 15px;
 }
 
 .table-flex, .table-flex a {
@@ -190,7 +190,6 @@ textarea {
 }
 
 a {
-  /*color: #007bff;*/
   color: #45a049;
 }
 
@@ -230,10 +229,10 @@ a {
 }
 
 .filterOptionButtons {
-    display: flex;
-    justify-content: space-between; /* Para distribuir los elementos uniformemente */
-    align-items: center; /* Para centrar verticalmente los elementos */
-    margin-top: 15px; /* Ajusta según sea necesario */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
 }
 
 
@@ -434,19 +433,24 @@ a {
   display: table-row;
 }
 
-.subtask-list{
+.subtask-list-td{
+  background-color: #fff;
+  width: 100%;
+  padding: 2px !important;
+}
+
+.dark-mode .subtask-list-td{
+  background-color: #333;
+  width: 100%;
+  padding: 5px !important;
+}
+
+tr[data-id] {
   background-color: #e1e1e182;
-  width: 100%;
 }
 
-.dark-mode .subtask-list{
+.dark-mode tr[data-id] {
   background-color: #00000029;
-  width: 100%;
-}
-
-.subtask-container {
-  display: flex;
-  justify-content: center;
 }
 
 .subtask-list {
@@ -457,7 +461,24 @@ a {
   width: 100%;
 }
 
-.subtask-list td {
-  width: 25%;
+.subtaks-toggle {
+  width:1% !important;
+}
+
+.th-head-title{
+  padding-left: 40px;
+}
+
+.subtaks-second-td{
+  width:5% !important;
+}
+
+.subtasks-split-content{
+  display:flex;
+  justify-content:space-between;
+}
+
+.subtasks-actions{
+  margin-right: 10%;
 }
 

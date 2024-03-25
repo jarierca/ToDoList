@@ -59,25 +59,49 @@ function createTaskRow(task) {
   var subtasks = listsData[currentList].tasks[task.id].subtasks;
   var showSubtasks = listsData[currentList].tasks[task.id].showSubtasks;
 
-  var titleCell = document.createElement("td");
-  var title = document.createElement("span");
-  title.textContent = task.title;
+  var showCell = document.createElement("td");
 
-  if(subtasks){
+  if(subtasks.length > 0){
     var toggleButton = document.createElement("a");
     toggleButton.classList.add("a-btn");
     toggleButton.classList.add("toggle-hide");
+   
     if(showSubtasks){
       toggleButton.textContent = "▼";
     }else {
       toggleButton.textContent = "▲";
     }
+
     toggleButton.addEventListener("click", function() {
       toggleSubtasksVisibility(row);
     });
-    titleCell.appendChild(toggleButton);
+    showCell.appendChild(toggleButton);
+
+  } else{
+    var toggleButton = document.createElement("span");
+    toggleButton.classList.add("a-btn");
+    toggleButton.classList.add("toggle-hide");
+   
+    toggleButton.textContent = "-";
+    showCell.appendChild(toggleButton);
   }
 
+  row.appendChild(showCell); 
+
+  var titleCell = document.createElement("td");
+  
+  var checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.classList.add("a-btn");
+  checkbox.title = "Toggle Completed";
+  checkbox.checked = task.completed;
+  checkbox.onchange = function() {
+    toggleCompleted(task,this);
+  };
+  titleCell.appendChild(checkbox);
+
+  var title = document.createElement("span");
+  title.textContent = task.title;
   titleCell.appendChild(title);
 
   row.appendChild(titleCell);    
@@ -91,15 +115,6 @@ function createTaskRow(task) {
   row.appendChild(dueDateCell);
 
   var actionsCell = document.createElement("td");
-  var checkbox = document.createElement("input");
-  checkbox.type = "checkbox";
-  checkbox.classList.add("a-btn");
-  checkbox.title = "Toggle Completed";
-  checkbox.checked = task.completed;
-  checkbox.onchange = function() {
-    toggleCompleted(task,this);
-  };
-  actionsCell.appendChild(checkbox);
 
   var editButton = document.createElement("a");
   editButton.textContent = "📝";
@@ -777,6 +792,10 @@ function loadSubtasks(task) {
     if(showSubtasks !== false){
       subtaskContainer.style.display = "none";    
     }
+
+    var subtaskTd = document.createElement("td");
+    subtaskTd.setAttribute('colspan', 5);
+    subtaskTd.classList.add("subtask-list-td");
       
     var subtaskTable = document.createElement("table");
     subtaskTable.classList.add("subtask-list");
@@ -785,17 +804,19 @@ function loadSubtasks(task) {
     subtasks.forEach(function(subtask) {
       var subtaskRow = document.createElement("tr");
         
-      for (var i = 0; i < 2; i++) {
-        var emptyCell = document.createElement("td");
-        subtaskRow.appendChild(emptyCell);
-      }
+      var emptyCell = document.createElement("td");
+      emptyCell.classList.add("subtaks-toggle");
+      subtaskRow.appendChild(emptyCell);
+   
+      var secondEmptyCell = document.createElement("td");
+      secondEmptyCell.classList.add("subtaks-second-td");
+      subtaskRow.appendChild(secondEmptyCell);       
         
       var subtaskTitleCell = document.createElement("td");
-      subtaskTitleCell.textContent = subtask.title;
-      subtaskRow.appendChild(subtaskTitleCell);
-        
-      var actionsCell = document.createElement("td");
-        
+      subtaskTitleCell.classList.add("subtasks-split-content");
+      
+      var firstContainer = document.createElement("span");
+
       var checkbox = document.createElement("input");
       checkbox.type = "checkbox";
       if (subtask.completed || task.completed) {
@@ -807,7 +828,15 @@ function loadSubtasks(task) {
       checkbox.onchange = function() {
         toggleSubtasks(taskIndex, subtask.id, this);
       };
-      actionsCell.appendChild(checkbox);
+      firstContainer.appendChild(checkbox);
+
+      var titleTest = document.createElement("span");
+      titleTest.textContent = subtask.title;
+      firstContainer.appendChild(titleTest);
+
+      var secondContainer = document.createElement("span");
+      secondContainer.classList.add("subtasks-actions");
+        
       var editButton = document.createElement("a");
       editButton.textContent = "📝";
       editButton.classList.add("a-action");
@@ -818,7 +847,7 @@ function loadSubtasks(task) {
           editSubtask(taskIndex, subtask.id, newTitle);
         }
       });
-      actionsCell.appendChild(editButton);
+      secondContainer.appendChild(editButton);
        
       var deleteButton = document.createElement("a");
       deleteButton.textContent = "🗑️";
@@ -830,15 +859,19 @@ function loadSubtasks(task) {
           deleteSubtask(taskIndex, subtask.id);
         }
       });
-      actionsCell.appendChild(deleteButton);
+      secondContainer.appendChild(deleteButton);
 
-      subtaskRow.appendChild(actionsCell);
+      subtaskTitleCell.appendChild(firstContainer);
+      subtaskTitleCell.appendChild(secondContainer);
+
+      subtaskRow.appendChild(subtaskTitleCell);
 
       subtaskTableBody.appendChild(subtaskRow);
     });
 
     subtaskTable.appendChild(subtaskTableBody);
-    subtaskContainer.appendChild(subtaskTable);
+    subtaskTd.appendChild(subtaskTable);
+    subtaskContainer.appendChild(subtaskTd);
 
     parentRow.insertBefore(subtaskContainer, row.nextSibling);
   }
