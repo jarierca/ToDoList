@@ -450,6 +450,10 @@ function applyFilter() {
   filteredTasks.forEach(function(task) {
     var row = createTaskRow(task);
     taskTableBody.appendChild(row);
+
+    if (task.subtasks && task.subtasks.length > 0) {
+       loadSubtasks(task);
+    }
   });
 }
 
@@ -913,7 +917,7 @@ function toggleSubtasksVisibility(taskRow) {
     var aToggleHide = taskRow.querySelector('a.toggle-hide');
     
     if (showSubTasks) {
-      subtaskContainer.style.display = "block";
+      subtaskContainer.style.display = "";
       aToggleHide.textContent = "▲";
 
     } else {
@@ -926,7 +930,7 @@ function toggleSubtasksVisibility(taskRow) {
 
       saveListsData();
 
-      loadTasks();
+      //loadTasks();
     }
   }
 }
