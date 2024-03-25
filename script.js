@@ -780,7 +780,7 @@ function loadSubtasks(task) {
 
   var showSubtasks = listsData[currentList].tasks[taskIndex].showSubtasks;
     
-  if(subtasks){
+  if(subtasks.length > 0){
     var subtaskContainer = document.createElement("tr");
     subtaskContainer.setAttribute("data-id", taskIndex);
     subtaskContainer.classList.add("subtask-container");
