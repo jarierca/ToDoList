@@ -9,6 +9,7 @@ You can try out the live demo [here](https://jarierca.github.io/ToDoList/).
 ## Key Features
 
 - **Task Management**: Allows users to add new tasks with a title, description, and optional due date.
+- **SubTask Management**: When you have a longer task than usual you can divide it into sub-tasks to keep better track of its progress.
 - **List Management**: Users can create, edit, and delete lists of tasks.
 - **Clear Visualization**: Presents the list of tasks in an organized and readable format to facilitate identification of pending tasks.
 - **Mark as Completed**: Users can mark tasks as completed with a simple click.
