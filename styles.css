@@ -182,7 +182,6 @@ textarea {
 
 .dark-mode a {
   color: #4CAF50;
-  /*color: #61dafb;*/
 }
 
 #toggleFilterButton{
@@ -434,23 +433,15 @@ a {
 }
 
 .subtask-list-td{
-  background-color: #fff;
+  background-color: #e1e1e182;
   width: 100%;
   padding: 2px !important;
 }
 
 .dark-mode .subtask-list-td{
-  background-color: #333;
+  background-color: #00000029;
   width: 100%;
   padding: 5px !important;
-}
-
-tr[data-id] {
-  background-color: #e1e1e182;
-}
-
-.dark-mode tr[data-id] {
-  background-color: #00000029;
 }
 
 .subtask-list {
@@ -478,7 +469,10 @@ tr[data-id] {
   justify-content:space-between;
 }
 
-.subtasks-actions{
+.subtasks-actions {
   margin-right: 10%;
 }
 
+.toggle-hide-none {
+  cursor: default;
+}

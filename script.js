@@ -80,9 +80,9 @@ function createTaskRow(task) {
   } else{
     var toggleButton = document.createElement("span");
     toggleButton.classList.add("a-btn");
-    toggleButton.classList.add("toggle-hide");
+    toggleButton.classList.add("toggle-hide-none");
    
-    toggleButton.textContent = "-";
+    toggleButton.textContent = "–";
     showCell.appendChild(toggleButton);
   }
 
@@ -213,12 +213,7 @@ function updateTask() {
 
     saveListsData();
 
-    var row = document.querySelector('tr[data-id="' + taskId + '"]');
-    if (row) {
-      row.cells[0].textContent = editTaskTitle;
-      row.cells[1].innerHTML = makeDescriptionClickable(editTaskDescription);
-      row.cells[2].textContent = editTaskDueDate;
-    }
+    loadTasks();
   }
 
   closeModal();
